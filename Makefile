@@ -6,7 +6,7 @@
 #    By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/10/17 11:11:59 by lsimon            #+#    #+#              #
-#    Updated: 2019/08/16 10:52:33 by lsimon           ###   ########.fr        #
+#    Updated: 2019/08/16 11:09:57 by lsimon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,30 +18,65 @@ SRCS_DIR = srcs
 INC_DIR = inc
 OBJS_DIR = objs
 
-NAME =
+SERVER_NAME = server
+CLIENT_NAME = client
 
-SRC_NAMES +=
-SRCS = $(addprefix $(SRCS_DIR)/, $(NM_SRC_NAMES))
+COMMONS_DIR = commons
+SERVER_DIR = server
+CLIENT_DIR = client
 
-OBJ_NAMES = $(SRC_NAMES:.c=.o)
-OBJS = $(addprefix $(OBJS_DIR)/, $(OBJ_NAMES))
+SERVER_SRC_NAMES = server.c
 
-all: $(NAME)
+CLIENT_SRC_NAMES = client.c
+
+SERVER_SRCS = $(addprefix $(SRCS_DIR)/$(SERVER_DIR)/, $(SERVER_SRC_NAMES))
+CLIENT_SRCS = $(addprefix $(SRCS_DIR)/$(CLIENT_DIR)/, $(CLIENT_SRC_NAMES))
+COMMON_SRCS = $(addprefix $(SRCS_DIR)/$(COMMONS_DIR), $(COMMONS_SRC_NAMES))
+
+SERVER_OBJ_NAMES = $(SERVER_SRC_NAMES:.c=.o)
+CLIENT_OBJ_NAMES = $(CLIENT_SRC_NAMES:.c=.o)
+COMMON_OBJ_NAMES = $(COMMONS_SRC_NAMES:.c=.o)
+
+SERVER_OBJS_DIR = $(OBJS_DIR)/$(SERVER_DIR)
+CLIENT_OBJS_DIR = $(OBJS_DIR)/$(CLIENT_DIR)
+COMMON_OBJS_DIR = $(OBJS_DIR)/$(COMMONS_DIR)
+
+SERVER_OBJS = $(addprefix $(SERVER_OBJS_DIR)/, $(SERVER_OBJ_NAMES))
+CLIENT_OBJS = $(addprefix $(CLIENT_OBJS_DIR)/, $(CLIENT_OBJ_NAMES))
+COMMON_OBJS = $(addprefix $(COMMON_OBJS_DIR)/, $(COMMON_OBJ_NAMES))
+
+all: $(SERVER_NAME) $(CLIENT_NAME)
 
 libft/libft.a:
 	@make -C libft/
 
-$(NAME): $(OBJS) libft/libft.a
+$(SERVER_NAME): $(SERVER_OBJS) $(COMMON_OBJS) libft/libft.a
 	$(CC) -o $@ $^
 
-$(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c
-	@mkdir -p $(OBJS_DIR)
+$(CLIENT_NAME): $(CLIENT_OBJS) $(COMMON_OBJS) libft/libft.a
+	$(CC) -o $@ $^
+
+$(SERVER_OBJS_DIR)/%.o: $(SRCS_DIR)/$(SERVER_DIR)/%.c
+	@mkdir -p $(SERVER_OBJS_DIR)
+	$(CC) $(CFLAGS) -c -o $@ $^
+
+$(CLIENT_OBJS_DIR)/%.o: $(SRCS_DIR)/$(CLIENT_DIR)/%.c
+	@mkdir -p $(CLIENT_OBJS_DIR)
+	$(CC) $(CFLAGS) -c -o $@ $^
+
+$(COMMON_OBJS_DIR)/%.o: $(SRCS_DIR)/$(COMMONS_DIR)/%.c
+	@mkdir -p $(COMMON_OBJS_DIR)
 	$(CC) $(CFLAGS) -c -o $@ $^
 
 clean:
-	rm -f $(OBJS)
+	@make clean -C libft/
+	rm -f $(SERVER_OBJS)
+	rm -f $(CLIENT_OBJS)
+	rm -f $(COMMON_OBJS)
 
 fclean: clean
-	rm -f $(NAME)
+	@make fclean -C libft/
+	rm -f $(SERVER_NAME)
+	rm -f $(CLIENT_NAME)
 
 re: fclean all
