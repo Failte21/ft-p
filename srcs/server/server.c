@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/16 12:08:08 by lsimon            #+#    #+#             */
-/*   Updated: 2019/08/16 12:18:22 by lsimon           ###   ########.fr       */
+/*   Updated: 2019/08/16 16:04:45 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,6 @@ int main(int ac, char **av)
 	unsigned int 		cslen;
 	struct sockaddr_in	csin;
 	char 				buf[BUF_SIZE];
-
-
 
 	if (ac != 2)
 		return usage();

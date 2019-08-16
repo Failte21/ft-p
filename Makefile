@@ -6,13 +6,13 @@
 #    By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/10/17 11:11:59 by lsimon            #+#    #+#              #
-#    Updated: 2019/08/16 11:09:57 by lsimon           ###   ########.fr        #
+#    Updated: 2019/08/16 16:38:17 by lsimon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
 
-CFLAGS = -Werror -Wall -Wextra -g
+CFLAGS = 
 
 SRCS_DIR = srcs
 INC_DIR = inc
