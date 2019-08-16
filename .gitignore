@@ -1,1 +1,3 @@
 libft/libft.h.gch
+*.o
+*.a

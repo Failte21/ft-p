@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   server.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/08/16 12:08:08 by lsimon            #+#    #+#             */
+/*   Updated: 2019/08/16 12:08:30 by lsimon           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/server.h"
 
 int create_server(int port, int backlog)
@@ -15,7 +27,7 @@ int create_server(int port, int backlog)
 	sin.sin_addr.s_addr = htonl(INADDR_ANY);
 	if (bind(sock, (const struct sockaddr *)&sin, sizeof(sin)) == -1)
 	{
-		ft_putstr("Bind errir\n");
+		ft_putstr("Bind error\n");
 		return(-1);
 	}
 	listen(sock, backlog);
@@ -48,7 +60,14 @@ int main(int ac, char **av)
 	if (sock == -1)
 		return (1);
 	cs = accept(sock, (struct sockaddr *)&csin, &cslen);
-	r = read(cs, buf, BUF_SIZE - 1);
+	while ((r = read(cs, buf, BUF_SIZE - 1))) {
+		buf[r] = '\0';
+		ft_putstr("received ");
+		ft_putnbr(r);
+		ft_putstr("bytes: ");
+		ft_putstr(buf);
+		ft_putchar('\n');
+	}
 	close(cs);
 	close(sock);
 	return (0);
