@@ -6,11 +6,11 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/16 12:08:08 by lsimon            #+#    #+#             */
-/*   Updated: 2019/08/16 12:08:30 by lsimon           ###   ########.fr       */
+/*   Updated: 2019/08/16 12:18:22 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/server.h"
+#include "../../inc/ft_p.h"
 
 int create_server(int port, int backlog)
 {
@@ -64,7 +64,7 @@ int main(int ac, char **av)
 		buf[r] = '\0';
 		ft_putstr("received ");
 		ft_putnbr(r);
-		ft_putstr("bytes: ");
+		ft_putstr(" bytes: ");
 		ft_putstr(buf);
 		ft_putchar('\n');
 	}
