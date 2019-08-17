@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/16 12:10:40 by lsimon            #+#    #+#             */
-/*   Updated: 2019/08/17 12:15:59 by lsimon           ###   ########.fr       */
+/*   Updated: 2019/08/17 12:54:19 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,11 @@
 # include <unistd.h>
 # include <netinet/in.h>
 # include <arpa/inet.h>
+# include <stdlib.h>
 
 # define BUF_SIZE 1024
 # define N_COMMANDS 1
+# define DATA_PORT 4242
 
 typedef enum	e_data_type
 {
@@ -64,14 +66,15 @@ typedef enum	e_mode
 
 typedef struct	s_connection
 {
-	int	socket;					// Might need more informations
+	int	socket;
+	int	cs;
 }				t_connection;
 
 // SERVER
 typedef struct	s_server_handler
 {
-	t_connection	*pi_connection;
-	t_connection 	*dts_connection;
+	t_connection	pi_connection;
+	t_connection 	dts_connection;
 	t_mode			dtp_mode;			// server mode for DTP connection (default should be ACTIVE)
 }				t_server_handler;
 
@@ -98,14 +101,17 @@ typedef struct	s_command_reply
 }				t_command_reply;
 
 // CLIENT
-void			send_command(int dest_socket, char *command_name);
-int				read_datas(t_client_handler *handler, char *datas);
+t_client_handler	*connect_client(char *address, int pi_port);
+void				send_command(int dest_socket, char *command_name);
+int					read_datas(t_client_handler *handler, char *datas);
 
 // SERVER
-int				process_command(t_server_handler *handler, char *command_name);
-int				reply(t_server_handler *handler, t_command_reply *reply);
-int				write_datas(t_server_handler *handler, char	*datas);
-int				ls_command(t_server_handler *handler);
+t_server_handler	*connect_server(int pi_port);
+int					leave_server(t_server_handler *handler);
+int					process_command(t_server_handler *handler, char *command_name);
+int					reply(t_server_handler *handler, t_command_reply *reply);
+int					write_datas(t_server_handler *handler, char	*datas);
+int					ls_command(t_server_handler *handler);
 
 static t_command_handler	g_command_handler_list[N_COMMANDS] =
 {

@@ -6,7 +6,7 @@
 #    By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/10/17 11:11:59 by lsimon            #+#    #+#              #
-#    Updated: 2019/08/16 11:09:57 by lsimon           ###   ########.fr        #
+#    Updated: 2019/08/17 12:56:30 by lsimon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,8 @@ SERVER_DIR = server
 CLIENT_DIR = client
 
 SERVER_SRC_NAMES = server.c
+SERVER_SRC_NAMES += connect_server.c
+SERVER_SRC_NAMES += leave_server.c
 
 CLIENT_SRC_NAMES = client.c
 
