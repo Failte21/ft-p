@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/16 12:10:40 by lsimon            #+#    #+#             */
-/*   Updated: 2019/08/17 12:54:19 by lsimon           ###   ########.fr       */
+/*   Updated: 2019/08/17 14:57:46 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,8 @@ typedef struct	s_command_handler
 // CLIENT
 typedef struct	s_client_handler
 {
-	t_connection	*pi_connection;
-	t_connection	*dts_connection;
+	t_connection	pi_connection;
+	t_connection	dts_connection;
 	t_mode			dtp_mode;			// client mode for DTP connection (default should be PASSIVE)
 }				t_client_handler;
 
@@ -104,6 +104,7 @@ typedef struct	s_command_reply
 t_client_handler	*connect_client(char *address, int pi_port);
 void				send_command(int dest_socket, char *command_name);
 int					read_datas(t_client_handler *handler, char *datas);
+int					leave_client(t_client_handler *handler);
 
 // SERVER
 t_server_handler	*connect_server(int pi_port);
