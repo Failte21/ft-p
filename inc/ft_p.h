@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/16 12:10:40 by lsimon            #+#    #+#             */
-/*   Updated: 2019/08/17 11:33:40 by lsimon           ###   ########.fr       */
+/*   Updated: 2019/08/17 12:15:59 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <arpa/inet.h>
 
 # define BUF_SIZE 1024
+# define N_COMMANDS 1
 
 typedef enum	e_data_type
 {
@@ -79,7 +80,7 @@ typedef	int		(*t_builtin)(t_server_handler *);
 typedef struct	s_command_handler
 {
 	char			*command_name;
-	t_builtin		*fn;
+	t_builtin		fn;
 }				t_command_handler;
 
 // CLIENT
@@ -106,7 +107,7 @@ int				reply(t_server_handler *handler, t_command_reply *reply);
 int				write_datas(t_server_handler *handler, char	*datas);
 int				ls_command(t_server_handler *handler);
 
-static t_command_handler	g_command_handler_list[] =
+static t_command_handler	g_command_handler_list[N_COMMANDS] =
 {
 	{ "ls", ls_command }
 };
