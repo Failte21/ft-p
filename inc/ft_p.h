@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/16 12:10:40 by lsimon            #+#    #+#             */
-/*   Updated: 2019/08/17 15:17:05 by lsimon           ###   ########.fr       */
+/*   Updated: 2019/08/17 16:22:38 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ typedef struct	s_connection
 typedef struct	s_server_handler
 {
 	t_connection	pi_connection;
-	t_connection 	dts_connection;
+	t_connection 	dtp_connection;
 	t_mode			dtp_mode;			// server mode for DTP connection (default should be ACTIVE)
 }				t_server_handler;
 
@@ -93,7 +93,7 @@ typedef struct	s_command_handler
 typedef struct	s_client_handler
 {
 	t_connection	pi_connection;
-	t_connection	dts_connection;
+	t_connection	dtp_connection;
 	t_mode			dtp_mode;			// client mode for DTP connection (default should be PASSIVE)
 }				t_client_handler;
 

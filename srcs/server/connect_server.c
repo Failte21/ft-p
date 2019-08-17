@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/17 12:32:20 by lsimon            #+#    #+#             */
-/*   Updated: 2019/08/17 15:33:34 by lsimon           ###   ########.fr       */
+/*   Updated: 2019/08/17 16:22:38 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static int 				create_socket(int port)
 	return (sock);
 }
 
-static t_server_handler	*init(int pi_socket, int dts_socket, int pi_cs)
+static t_server_handler	*init(int pi_socket, int dtp_socket, int pi_cs)
 {
 	t_server_handler	*handler;
 
@@ -58,7 +58,7 @@ static t_server_handler	*init(int pi_socket, int dts_socket, int pi_cs)
 	}
 
 	handler->dtp_mode = ACTIVE;
-	handler->dts_connection.socket = dts_socket;
+	handler->dtp_connection.socket = dtp_socket;
 	handler->pi_connection.socket = pi_socket;
 	handler->pi_connection.cs = pi_cs;
 	return (handler);
@@ -67,16 +67,16 @@ static t_server_handler	*init(int pi_socket, int dts_socket, int pi_cs)
 t_server_handler		*connect_server(int pi_port)
 {
 	int					pi_socket;
-	int					dts_socket;
+	int					dtp_socket;
 	int					pi_cs;
 
 	pi_socket = create_socket(pi_port);
-	dts_socket = create_socket(DATA_PORT);
-	if (pi_socket == -1 || dts_socket == -1)
+	dtp_socket = create_socket(DATA_PORT);
+	if (pi_socket == -1 || dtp_socket == -1)
 		return (NULL);
 	listen(pi_socket, 42);					// TODO: find out about backlog
 	pi_cs = create_cs(pi_socket);
 	if (pi_cs == -1)
 		return (NULL);	
-	return (init(pi_socket, dts_socket, pi_cs));
+	return (init(pi_socket, dtp_socket, pi_cs));
 }
