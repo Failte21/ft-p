@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/16 12:08:08 by lsimon            #+#    #+#             */
-/*   Updated: 2019/08/17 12:56:00 by lsimon           ###   ########.fr       */
+/*   Updated: 2019/08/17 15:34:54 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,22 @@ int usage()
 {
 	ft_putstr("Usage: ./server [port]\n");
 	return (1);
+}
+
+int server_listen(t_server_handler *handler)
+{
+	int		r;
+	char	buf[BUF_SIZE];
+
+	while (1)
+	{
+		while ((r = read(handler->pi_connection.cs, buf, BUF_SIZE - 1)))
+		{
+			buf[r] = '\0';
+			printf("%s\n", buf);
+		}
+	}
+	return (0);
 }
 
 int main(int ac, char **av)
@@ -30,5 +46,5 @@ int main(int ac, char **av)
 	handler = connect_server(pi_port);
 	if (handler == NULL)
 		return (1);
-	return (leave_server(handler));
+	return (server_listen(handler) + leave_server(handler));
 }

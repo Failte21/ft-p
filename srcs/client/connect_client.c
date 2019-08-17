@@ -6,21 +6,23 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/17 14:50:21 by lsimon            #+#    #+#             */
-/*   Updated: 2019/08/17 14:54:29 by lsimon           ###   ########.fr       */
+/*   Updated: 2019/08/17 15:40:22 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/ft_p.h"
 
-static int				create_cs(int socket)
-{
-	int 				cs;
-	unsigned int 		cslen;
-	struct sockaddr_in	csin;
+// static int				create_cs(int socket)
+// {
+// 	int 				cs;
+// 	unsigned int 		cslen;
+// 	struct sockaddr_in	csin;
 
-	cs = accept(socket, (struct sockaddr *)&csin, &cslen);
-	return (cs);
-}
+// 	cs = accept(socket, (struct sockaddr *)&csin, &cslen);
+// 	if (cs == -1)
+// 		ft_putstr("CS ERROR");
+// 	return (cs);
+// }
 
 static int 				create_socket(int port, char *address)
 {
@@ -68,10 +70,12 @@ t_client_handler		*connect_client(char *address, int pi_port)
 	int					dts_cs;
 
 	pi_socket = create_socket(pi_port, address);
-	dts_socket = create_socket(DATA_PORT, address);
+	dts_socket = 0; // create_socket(DATA_PORT, address);
 	if (pi_socket == -1 || dts_socket == -1)
 		return (NULL);
-	dts_cs = create_cs(pi_socket);
-	listen(dts_socket, 42);						// TODO: find out about backlog
+	// listen(dts_socket, 42);						// TODO: find out about backlog
+	dts_cs = 0; // create_cs(dts_socket);
+	if (dts_cs == -1)
+		return (NULL);
 	return (init(pi_socket, dts_socket, dts_cs));
 }

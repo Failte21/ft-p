@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/16 12:10:40 by lsimon            #+#    #+#             */
-/*   Updated: 2019/08/17 14:57:46 by lsimon           ###   ########.fr       */
+/*   Updated: 2019/08/17 15:17:05 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@
 # include <netinet/in.h>
 # include <arpa/inet.h>
 # include <stdlib.h>
+
+// TO DELETE
+# include <stdio.h>
 
 # define BUF_SIZE 1024
 # define N_COMMANDS 1
@@ -39,9 +42,9 @@ typedef enum	e_transmission_mode
 
 typedef enum	e_data_structure	
 {
-	FILE,						// Probably the only one I'll have to handle
-	RECORD,
-	PAGE
+	DS_FILE,						// Probably the only one I'll have to handle
+	DS_RECORD,
+	DS_PAGE
 }				t_data_structure;
 
 typedef struct	s_data_connection_parameters
