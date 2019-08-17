@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/16 12:10:40 by lsimon            #+#    #+#             */
-/*   Updated: 2019/08/17 10:34:47 by lsimon           ###   ########.fr       */
+/*   Updated: 2019/08/17 11:11:10 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,6 @@ typedef struct	s_data_connection_parameters
 	t_data_structure	data_structure;
 }				t_data_connection_parameters;
 
-
-
 typedef struct	s_commmand
 {
 	t_data_connection_parameters	*connection_parameters;		// Only mandatory for data related commands (EX: put)
@@ -63,12 +61,26 @@ typedef enum	e_mode
 	PASSIVE
 }				t_mode;
 
+typedef struct	t_connection
+{
+	int	socket;					// Might need more informations
+}				s_connection;
+
+// SERVER
 typedef struct	s_server_handler
 {
-	int		socket_control;		// socket in use for PI communication
-	int 	socket_data;		// socket in use for DTP communication
-	t_mode	dtp_mode;			// server mode for DTP connection (default should be ACTIVE)
+	s_connection	*pi_connection;
+	s_connection 	*dts_connection;
+	t_mode			dtp_mode;			// server mode for DTP connection (default should be ACTIVE)
 }				t_server_handler;
+
+// CLIENT
+typedef struct	client_handler
+{
+	s_connection	*pi_connection;
+	s_connection	*dts_connection;
+	t_mode			dtp_mode;			// client mode for DTP connection (default should be PASSIVE)
+}				t_client_handler;
 
 typedef struct	s_command_reply
 {
