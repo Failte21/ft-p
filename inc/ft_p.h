@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/16 12:10:40 by lsimon            #+#    #+#             */
-/*   Updated: 2019/08/17 11:11:10 by lsimon           ###   ########.fr       */
+/*   Updated: 2019/08/17 11:33:40 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ typedef struct	s_data_connection_parameters
 typedef struct	s_commmand
 {
 	t_data_connection_parameters	*connection_parameters;		// Only mandatory for data related commands (EX: put)
-	char							command_name[5];			// Ex: ls
+	char							*command_name;				// Ex: ls
 }				t_command;
 
 typedef enum	e_mode
@@ -61,24 +61,32 @@ typedef enum	e_mode
 	PASSIVE
 }				t_mode;
 
-typedef struct	t_connection
+typedef struct	s_connection
 {
 	int	socket;					// Might need more informations
-}				s_connection;
+}				t_connection;
 
 // SERVER
 typedef struct	s_server_handler
 {
-	s_connection	*pi_connection;
-	s_connection 	*dts_connection;
+	t_connection	*pi_connection;
+	t_connection 	*dts_connection;
 	t_mode			dtp_mode;			// server mode for DTP connection (default should be ACTIVE)
 }				t_server_handler;
 
-// CLIENT
-typedef struct	client_handler
+typedef	int		(*t_builtin)(t_server_handler *);
+
+typedef struct	s_command_handler
 {
-	s_connection	*pi_connection;
-	s_connection	*dts_connection;
+	char			*command_name;
+	t_builtin		*fn;
+}				t_command_handler;
+
+// CLIENT
+typedef struct	s_client_handler
+{
+	t_connection	*pi_connection;
+	t_connection	*dts_connection;
 	t_mode			dtp_mode;			// client mode for DTP connection (default should be PASSIVE)
 }				t_client_handler;
 
@@ -87,5 +95,20 @@ typedef struct	s_command_reply
 	int 	code;
 	char	*message;
 }				t_command_reply;
+
+// CLIENT
+void			send_command(int dest_socket, char *command_name);
+int				read_datas(t_client_handler *handler, char *datas);
+
+// SERVER
+int				process_command(t_server_handler *handler, char *command_name);
+int				reply(t_server_handler *handler, t_command_reply *reply);
+int				write_datas(t_server_handler *handler, char	*datas);
+int				ls_command(t_server_handler *handler);
+
+static t_command_handler	g_command_handler_list[] =
+{
+	{ "ls", ls_command }
+};
 
 #endif
