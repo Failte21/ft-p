@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/17 14:50:21 by lsimon            #+#    #+#             */
-/*   Updated: 2019/08/17 16:22:38 by lsimon           ###   ########.fr       */
+/*   Updated: 2019/08/18 09:35:48 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,16 +66,10 @@ static t_client_handler	*init(int pi_socket, int dtp_socket, int pi_cs)
 t_client_handler		*connect_client(char *address, int pi_port)
 {
 	int					pi_socket;
-	int					dtp_socket;
-	int					dtp_cs;
 
 	pi_socket = create_socket(pi_port, address);
-	dtp_socket = 0; // create_socket(DATA_PORT, address);
-	if (pi_socket == -1 || dtp_socket == -1)
+	if (pi_socket == -1)
 		return (NULL);
 	// listen(dtp_socket, 42);						// TODO: find out about backlog
-	dtp_cs = 0; // create_cs(dtp_socket);
-	if (dtp_cs == -1)
-		return (NULL);
-	return (init(pi_socket, dtp_socket, dtp_cs));
+	return (init(pi_socket, 0, 0));
 }

@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/16 12:10:40 by lsimon            #+#    #+#             */
-/*   Updated: 2019/08/17 16:22:38 by lsimon           ###   ########.fr       */
+/*   Updated: 2019/08/18 09:34:46 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@
 
 # define BUF_SIZE 1024
 # define N_COMMANDS 1
-# define DATA_PORT 4242
 
 typedef enum	e_data_type
 {
@@ -69,6 +68,7 @@ typedef enum	e_mode
 
 typedef struct	s_connection
 {
+	int	data_port;
 	int	socket;
 	int	cs;
 }				t_connection;
