@@ -6,12 +6,11 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/17 12:32:20 by lsimon            #+#    #+#             */
-/*   Updated: 2019/08/18 09:35:23 by lsimon           ###   ########.fr       */
+/*   Updated: 2019/08/18 13:18:50 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/ft_p.h"
-
 
 static int				create_cs(int socket)
 {
@@ -23,27 +22,6 @@ static int				create_cs(int socket)
 	if (cs == -1)
 		ft_putstr("CS error");
 	return (cs);
-}
-
-static int 				create_socket(int port)
-{
-	int					sock;
-	struct protoent		*proto;
-	struct sockaddr_in	sin;
-
-	proto = getprotobyname("tcp");
-	if (proto == 0)
-		return (-1);
-	sock = socket(PF_INET, SOCK_STREAM, proto->p_proto);
-	sin.sin_family = AF_INET;
-	sin.sin_port = htons(port);
-	sin.sin_addr.s_addr = htonl(INADDR_ANY);
-	if (bind(sock, (const struct sockaddr *)&sin, sizeof(sin)) == -1)
-	{
-		ft_putstr("Bind error\n");
-		return(-1);
-	}
-	return (sock);
 }
 
 static t_server_handler	*init(int pi_socket, int dtp_socket, int pi_cs)
@@ -69,7 +47,7 @@ t_server_handler		*connect_server(int pi_port)
 	int					pi_socket;
 	int					pi_cs;
 
-	pi_socket = create_socket(pi_port);
+	pi_socket = create_socket(pi_port, NULL, PASSIVE);
 	if (pi_socket == -1)
 		return (NULL);
 	listen(pi_socket, 42);					// TODO: find out about backlog

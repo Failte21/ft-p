@@ -6,7 +6,7 @@
 #    By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/10/17 11:11:59 by lsimon            #+#    #+#              #
-#    Updated: 2019/08/17 14:59:29 by lsimon           ###   ########.fr        #
+#    Updated: 2019/08/18 13:15:50 by lsimon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,8 @@ SERVER_SRC_NAMES += leave_server.c
 CLIENT_SRC_NAMES = client.c
 CLIENT_SRC_NAMES += connect_client.c
 CLIENT_SRC_NAMES += leave_client.c
+
+COMMONS_SRC_NAMES = create_socket.c
 
 SERVER_SRCS = $(addprefix $(SRCS_DIR)/$(SERVER_DIR)/, $(SERVER_SRC_NAMES))
 CLIENT_SRCS = $(addprefix $(SRCS_DIR)/$(CLIENT_DIR)/, $(CLIENT_SRC_NAMES))
