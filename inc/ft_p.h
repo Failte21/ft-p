@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/16 12:10:40 by lsimon            #+#    #+#             */
-/*   Updated: 2019/08/18 13:18:27 by lsimon           ###   ########.fr       */
+/*   Updated: 2019/08/18 13:59:01 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ typedef struct	s_client_handler
 	t_connection	pi_connection;
 	t_connection	dtp_connection;
 	t_mode			dtp_mode;			// client mode for DTP connection (default should be PASSIVE)
+	struct hostent	*host;
 }				t_client_handler;
 
 typedef struct	s_command_reply
@@ -124,5 +125,19 @@ static t_command_handler	g_command_handler_list[N_COMMANDS] =
 {
 	{ "ls", ls_command }
 };
+
+// socket(2), open(2), close(2), setsockopt(2), getsockname(2)
+// ◦ getprotobyname(3), gethostbyname(3)
+// ◦ bind(2), connect(2), listen(2), accept(2)
+// ◦ htons(3), htonl(3), ntohs(3), ntohl(3)
+// ◦ inet_addr(3), inet_ntoa(3)
+// ◦ send(2), recv(2), execv(2), execl(2), dup2(2), wait4(2)
+// ◦ fork(2), getcwd(3), exit(3), printf(3), signal(3)
+// ◦ mmap(2), munmap(2), lseek(2), fstat(2)
+// ◦ opendir(3), readdir(3), closedir(3)
+// ◦ chdir(2), mkdir(2), unlink(2)
+// ◦ les fonctions autorisées dans le cadre de votre libft (read(2), write(2), malloc(3),
+// free(3), etc... par exemple ;-) )
+// ◦ select(2), FD_CLR, FD_COPY, FD_ISSET, FD_SET, FD_ZERO mais uniquement si c’est pour faire quelque chose de correct !
 
 #endif

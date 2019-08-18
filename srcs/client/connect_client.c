@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/17 14:50:21 by lsimon            #+#    #+#             */
-/*   Updated: 2019/08/18 13:18:44 by lsimon           ###   ########.fr       */
+/*   Updated: 2019/08/18 13:59:08 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 // 	return (cs);
 // }
 
-static t_client_handler	*init(int pi_socket, int dtp_socket, int pi_cs)
+static t_client_handler	*init(int pi_socket, int dtp_socket, int pi_cs, struct hostent *host)
 {
 	t_client_handler	*handler;
 
@@ -35,6 +35,7 @@ static t_client_handler	*init(int pi_socket, int dtp_socket, int pi_cs)
 		return(NULL);
 	}
 
+	handler->host = host;
 	handler->dtp_mode = ACTIVE;
 	handler->dtp_connection.socket = dtp_socket;
 	handler->pi_connection.socket = pi_socket;
@@ -45,10 +46,12 @@ static t_client_handler	*init(int pi_socket, int dtp_socket, int pi_cs)
 t_client_handler		*connect_client(char *address, int pi_port)
 {
 	int					pi_socket;
+	struct hostent		*host;
 
+	host = gethostbyname(address);
 	pi_socket = create_socket(pi_port, address, ACTIVE);
 	if (pi_socket == -1)
 		return (NULL);
 	// listen(dtp_socket, 42);						// TODO: find out about backlog
-	return (init(pi_socket, 0, 0));
+	return (init(pi_socket, 0, 0, host));
 }
