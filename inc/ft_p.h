@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/16 12:10:40 by lsimon            #+#    #+#             */
-/*   Updated: 2019/08/22 09:57:18 by lsimon           ###   ########.fr       */
+/*   Updated: 2019/08/22 10:57:11 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ typedef struct	s_command_reply
 }				t_command_reply;
 
 // CLIENT
-t_client_handler	*connect_client(char *address, int pi_port);
+int					connect_client(char *address, int port);
 void				send_command(int dest_socket, char *command_name);
 int					read_datas(t_client_handler *handler, char *datas);
 int					leave_client(t_client_handler *handler);

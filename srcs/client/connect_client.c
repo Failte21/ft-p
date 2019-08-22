@@ -6,25 +6,13 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/17 14:50:21 by lsimon            #+#    #+#             */
-/*   Updated: 2019/08/18 13:59:08 by lsimon           ###   ########.fr       */
+/*   Updated: 2019/08/22 11:32:24 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/ft_p.h"
 
-// static int				create_cs(int socket)
-// {
-// 	int 				cs;
-// 	unsigned int 		cslen;
-// 	struct sockaddr_in	csin;
-
-// 	cs = accept(socket, (struct sockaddr *)&csin, &cslen);
-// 	if (cs == -1)
-// 		ft_putstr("CS ERROR");
-// 	return (cs);
-// }
-
-static t_client_handler	*init(int pi_socket, int dtp_socket, int pi_cs, struct hostent *host)
+static t_client_handler	*init(struct hostent *host, int port)
 {
 	t_client_handler	*handler;
 
@@ -36,22 +24,42 @@ static t_client_handler	*init(int pi_socket, int dtp_socket, int pi_cs, struct h
 	}
 
 	handler->host = host;
-	handler->dtp_mode = ACTIVE;
-	handler->dtp_connection.socket = dtp_socket;
-	handler->pi_connection.socket = pi_socket;
-	handler->pi_connection.cs = pi_cs;
+	handler->dtp_connection.data_port = port;
+	handler->dtp_mode = PASSIVE;
 	return (handler);
 }
 
-t_client_handler		*connect_client(char *address, int pi_port)
+int client_listen(t_client_handler *handler)
+{
+	char	buf[BUF_SIZE];
+	int		r;
+
+	while ((r = read(0, buf, BUF_SIZE - 1)))
+		write(handler->pi_connection.socket, buf, r);
+	return (0);
+}
+
+int						connect_client(char *address, int port)
 {
 	int					pi_socket;
 	struct hostent		*host;
+	t_client_handler	*handler;
+	int					running;
+	pid_t				pid;
 
+	running = 1;
 	host = gethostbyname(address);
-	pi_socket = create_socket(pi_port, address, ACTIVE);
-	if (pi_socket == -1)
-		return (NULL);
-	// listen(dtp_socket, 42);						// TODO: find out about backlog
-	return (init(pi_socket, 0, 0, host));
+	if (host == NULL)
+		return (-1);
+	handler = init(host, port);
+	pid = fork();
+	if (pid > 0)
+	{
+		pi_socket = create_socket(port, address, ACTIVE);
+		if (pi_socket == -1)
+			return (-1);
+		handler->pi_connection.socket = pi_socket;
+		return (client_listen(handler));
+	}
+	return (0);
 }

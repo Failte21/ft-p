@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/17 12:32:20 by lsimon            #+#    #+#             */
-/*   Updated: 2019/08/22 10:09:35 by lsimon           ###   ########.fr       */
+/*   Updated: 2019/08/22 11:32:09 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int						server_listen(t_server_handler *handler)
 	while ((r = read(handler->pi_connection.cs, buf, BUF_SIZE - 1)))
 	{
 		buf[r] = '\0';
-		printf("%s\n", buf);
+		printf("%s", buf);
 	}
 	return (0);
 }
