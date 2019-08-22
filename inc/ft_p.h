@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/16 12:10:40 by lsimon            #+#    #+#             */
-/*   Updated: 2019/08/22 10:57:11 by lsimon           ###   ########.fr       */
+/*   Updated: 2019/08/22 11:59:10 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,20 @@
 # include <netinet/in.h>
 # include <arpa/inet.h>
 # include <stdlib.h>
-
-// TO DELETE
 # include <stdio.h>
 
 # define BUF_SIZE 1024
 # define N_COMMANDS 1
+
+// colors
+# define RED   "\x1B[31m"
+# define GRN   "\x1B[32m"
+# define YEL   "\x1B[33m"
+# define BLU   "\x1B[34m"
+# define MAG   "\x1B[35m"
+# define CYN   "\x1B[36m"
+# define WHT   "\x1B[37m"
+# define RESET "\x1B[0m"
 
 typedef enum	e_data_type
 {
@@ -105,8 +113,9 @@ typedef struct	s_command_reply
 }				t_command_reply;
 
 // CLIENT
-int					connect_client(char *address, int port);
+t_client_handler	*init_client_handler(struct hostent *host, int port);
 void				send_command(int dest_socket, char *command_name);
+int					run_client_interface(char *address, int port);
 int					read_datas(t_client_handler *handler, char *datas);
 int					leave_client(t_client_handler *handler);
 

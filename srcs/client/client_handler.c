@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   connect_client.c                                   :+:      :+:    :+:   */
+/*   client_handler.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/17 14:50:21 by lsimon            #+#    #+#             */
-/*   Updated: 2019/08/22 11:36:23 by lsimon           ###   ########.fr       */
+/*   Updated: 2019/08/22 11:48:41 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/ft_p.h"
 
-static t_client_handler	*init(struct hostent *host, int port)
+t_client_handler	*init_client_handler(struct hostent *host, int port)
 {
 	t_client_handler	*handler;
 
@@ -29,31 +29,11 @@ static t_client_handler	*init(struct hostent *host, int port)
 	return (handler);
 }
 
-int client_listen(t_client_handler *handler)
+int					leave_client(t_client_handler *handler)
 {
-	char	buf[BUF_SIZE];
-	int		r;
-
-	while ((r = read(0, buf, BUF_SIZE - 1)))
-		write(handler->pi_connection.socket, buf, r);
+	close(handler->pi_connection.socket);
+	close(handler->pi_connection.cs);
+	close(handler->dtp_connection.socket);
+	free(handler);
 	return (0);
-}
-
-int						connect_client(char *address, int port)
-{
-	int					pi_socket;
-	struct hostent		*host;
-	t_client_handler	*handler;
-	int					running;
-
-	running = 1;
-	host = gethostbyname(address);
-	if (host == NULL)
-		return (-1);
-	handler = init(host, port);
-	pi_socket = create_socket(port, address, ACTIVE);
-	if (pi_socket == -1)
-		return (-1);
-	handler->pi_connection.socket = pi_socket;
-	return (client_listen(handler));
 }

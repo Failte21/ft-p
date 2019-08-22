@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/16 12:11:21 by lsimon            #+#    #+#             */
-/*   Updated: 2019/08/22 10:59:21 by lsimon           ###   ########.fr       */
+/*   Updated: 2019/08/22 11:50:24 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int main(int ac, char **av)
 
 	address = av[1];
 	port = ft_atoi(av[2]);
-	if ((connect_client(address, port) == -1))
+	if ((run_client_interface(address, port) == -1))
 		return (1);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/17 12:32:20 by lsimon            #+#    #+#             */
-/*   Updated: 2019/08/22 11:32:09 by lsimon           ###   ########.fr       */
+/*   Updated: 2019/08/22 11:52:13 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int				create_cs(int socket)
 
 	cs = accept(socket, (struct sockaddr *)&csin, &cslen);
 	if (cs == -1)
-		ft_putstr("CS error");
+		ft_putstr("Q error");
 	return (cs);
 }
 
