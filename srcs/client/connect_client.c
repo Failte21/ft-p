@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/17 14:50:21 by lsimon            #+#    #+#             */
-/*   Updated: 2019/08/22 11:32:24 by lsimon           ###   ########.fr       */
+/*   Updated: 2019/08/22 11:36:23 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,21 +45,15 @@ int						connect_client(char *address, int port)
 	struct hostent		*host;
 	t_client_handler	*handler;
 	int					running;
-	pid_t				pid;
 
 	running = 1;
 	host = gethostbyname(address);
 	if (host == NULL)
 		return (-1);
 	handler = init(host, port);
-	pid = fork();
-	if (pid > 0)
-	{
-		pi_socket = create_socket(port, address, ACTIVE);
-		if (pi_socket == -1)
-			return (-1);
-		handler->pi_connection.socket = pi_socket;
-		return (client_listen(handler));
-	}
-	return (0);
+	pi_socket = create_socket(port, address, ACTIVE);
+	if (pi_socket == -1)
+		return (-1);
+	handler->pi_connection.socket = pi_socket;
+	return (client_listen(handler));
 }
