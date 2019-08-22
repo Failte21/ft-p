@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/18 13:11:47 by lsimon            #+#    #+#             */
-/*   Updated: 2019/08/18 13:19:33 by lsimon           ###   ########.fr       */
+/*   Updated: 2019/08/22 09:48:17 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int active_socket(char *address, int port)
 	sock = socket(PF_INET, SOCK_STREAM, proto->p_proto);
 	sin.sin_family = AF_INET;
 	sin.sin_port = htons(port);
-	sin.sin_addr.s_addr = address != NULL ? sin.sin_addr.s_addr = inet_addr(address): htonl(INADDR_ANY);
+	sin.sin_addr.s_addr = inet_addr(address);
 	if (connect(sock, (const struct sockaddr *)&sin, sizeof(sin)) == -1)
 	{
 		ft_putstr("Connection error\n");

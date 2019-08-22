@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/16 12:10:40 by lsimon            #+#    #+#             */
-/*   Updated: 2019/08/18 13:59:01 by lsimon           ###   ########.fr       */
+/*   Updated: 2019/08/22 09:57:18 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ int					read_datas(t_client_handler *handler, char *datas);
 int					leave_client(t_client_handler *handler);
 
 // SERVER
-t_server_handler	*connect_server(int pi_port);
+int					connect_server(int pi_port);
 int					leave_server(t_server_handler *handler);
 int					process_command(t_server_handler *handler, char *command_name);
 int					reply(t_server_handler *handler, t_command_reply *reply);
