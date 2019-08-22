@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/16 12:08:08 by lsimon            #+#    #+#             */
-/*   Updated: 2019/08/22 12:38:34 by lsimon           ###   ########.fr       */
+/*   Updated: 2019/08/22 12:57:33 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int usage()
 {
-	ft_putstr("Usage: ./server [port]\n");
+	ft_putstr("Usage: ./server <port>\n");
 	return (1);
 }
 
