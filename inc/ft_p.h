@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/16 12:10:40 by lsimon            #+#    #+#             */
-/*   Updated: 2019/08/22 11:59:10 by lsimon           ###   ########.fr       */
+/*   Updated: 2019/08/22 12:01:20 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,9 @@
 
 # define BUF_SIZE 1024
 # define N_COMMANDS 1
+
+// awesome text
+# define WELCOME_CL "Welcome to FTP!\n"
 
 // colors
 # define RED   "\x1B[31m"

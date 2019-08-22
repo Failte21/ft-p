@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/22 11:42:38 by lsimon            #+#    #+#             */
-/*   Updated: 2019/08/22 11:59:22 by lsimon           ###   ########.fr       */
+/*   Updated: 2019/08/22 12:02:27 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,21 @@ static void		display_prompt(void)
 	ft_putstr(RESET);
 }
 
+static void		greetings(void)
+{
+	ft_putstr(MAG);
+	ft_putstr(WELCOME_CL);
+	ft_putchar('\n');
+	ft_putstr(RESET);
+	display_prompt();
+}
+
 static int 		client_listen(t_client_handler *handler)
 {
 	char	buf[BUF_SIZE];
 	int		r;
 
-	display_prompt();
+	greetings();
 	while ((r = read(0, buf, BUF_SIZE - 1)))
 	{
 		write(handler->pi_connection.socket, buf, r);
