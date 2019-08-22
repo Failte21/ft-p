@@ -6,7 +6,7 @@
 #    By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/10/17 11:11:59 by lsimon            #+#    #+#              #
-#    Updated: 2019/08/22 13:50:07 by lsimon           ###   ########.fr        #
+#    Updated: 2019/08/22 16:27:27 by lsimon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ SERVER_SRC_NAMES += connect_server.c
 SERVER_SRC_NAMES += leave_server.c
 SERVER_SRC_NAMES += process_command.c
 SERVER_SRC_NAMES += ls_command.c
+SERVER_SRC_NAMES += exec_builtin.c
 
 CLIENT_SRC_NAMES = client.c
 CLIENT_SRC_NAMES += client_ui.c

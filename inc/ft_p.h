@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/16 12:10:40 by lsimon            #+#    #+#             */
-/*   Updated: 2019/08/22 14:44:11 by lsimon           ###   ########.fr       */
+/*   Updated: 2019/08/22 16:25:12 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,7 @@ int					process_command(t_server_handler *handler, char *command_name, char **ar
 int					reply(t_server_handler *handler, t_command_reply *reply);
 int					write_datas(t_server_handler *handler, char	*datas);
 int					ls_command(t_server_handler *handler, char **args);
+int					exec_builtin(t_server_handler *handler, char *bin, char **args);
 
 // COMMON
 int					create_socket(int port, char *address, t_mode mode);
