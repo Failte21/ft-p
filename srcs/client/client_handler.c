@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/17 14:50:21 by lsimon            #+#    #+#             */
-/*   Updated: 2019/08/22 11:48:41 by lsimon           ###   ########.fr       */
+/*   Updated: 2019/08/22 12:36:19 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,7 @@ t_client_handler	*init_client_handler(struct hostent *host, int port)
 
 	handler = malloc(sizeof(t_client_handler));
 	if (handler == NULL)
-	{
-		ft_putstr("Memory allocation error\n");
-		return(NULL);
-	}
-
+		return ptr_error("malloc error\n");
 	handler->host = host;
 	handler->dtp_connection.data_port = port;
 	handler->dtp_mode = PASSIVE;

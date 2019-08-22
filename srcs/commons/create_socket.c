@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/18 13:11:47 by lsimon            #+#    #+#             */
-/*   Updated: 2019/08/22 09:48:17 by lsimon           ###   ########.fr       */
+/*   Updated: 2019/08/22 12:35:54 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,7 @@ static int active_socket(char *address, int port)
 	sin.sin_port = htons(port);
 	sin.sin_addr.s_addr = inet_addr(address);
 	if (connect(sock, (const struct sockaddr *)&sin, sizeof(sin)) == -1)
-	{
-		ft_putstr("Connection error\n");
-		return(-1);
-	}
+		return int_error("Connection error\n");
 	return (sock);
 }
 
@@ -47,10 +44,7 @@ static int passive_socket(int port)
 	sin.sin_port = htons(port);
 	sin.sin_addr.s_addr = htonl(INADDR_ANY);
 	if (bind(sock, (const struct sockaddr *)&sin, sizeof(sin)) == -1)
-	{
-		ft_putstr("Bind error\n");
-		return(-1);
-	}
+		return int_error("Bind error\n");
 	return (sock);
 }
 

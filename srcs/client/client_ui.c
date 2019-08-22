@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/22 11:42:38 by lsimon            #+#    #+#             */
-/*   Updated: 2019/08/22 12:02:27 by lsimon           ###   ########.fr       */
+/*   Updated: 2019/08/22 12:34:52 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int				run_client_interface(char *address, int port)
 	running = 1;
 	host = gethostbyname(address);
 	if (host == NULL)
-		return (-1);
+		return int_error("gethostbyname error\n");
 	handler = init_client_handler(host, port);
 	pi_socket = create_socket(port, address, ACTIVE);
 	if (pi_socket == -1)

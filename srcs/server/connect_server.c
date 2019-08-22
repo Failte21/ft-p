@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/17 12:32:20 by lsimon            #+#    #+#             */
-/*   Updated: 2019/08/22 11:52:13 by lsimon           ###   ########.fr       */
+/*   Updated: 2019/08/22 12:37:53 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int				create_cs(int socket)
 
 	cs = accept(socket, (struct sockaddr *)&csin, &cslen);
 	if (cs == -1)
-		ft_putstr("Q error");
+		return (int_error("accept error\n"));
 	return (cs);
 }
 
@@ -30,10 +30,7 @@ static t_server_handler	*init()
 
 	handler = malloc(sizeof(t_server_handler));
 	if (handler == NULL)
-	{
-		ft_putstr("Memory allocation error\n");
-		return(NULL);
-	}
+		return (ptr_error("malloc error\n"));
 
 	handler->dtp_mode = PASSIVE;
 	return (handler);
