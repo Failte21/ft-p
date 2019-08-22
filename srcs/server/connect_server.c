@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/17 12:32:20 by lsimon            #+#    #+#             */
-/*   Updated: 2019/08/22 14:18:39 by lsimon           ###   ########.fr       */
+/*   Updated: 2019/08/22 14:39:08 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ int						wait_for_commands(t_server_handler *handler)
 		tmp = buf;
 		process_eol(tmp);
 		split = ft_strsplit(buf, ' ');
-		process_command(handler, *split, split + 1);
+		if (process_command(handler, *split, split + 1) == -1)
+			return (1);
 	}
 	return (0);
 }

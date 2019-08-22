@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/16 12:10:40 by lsimon            #+#    #+#             */
-/*   Updated: 2019/08/22 14:26:36 by lsimon           ###   ########.fr       */
+/*   Updated: 2019/08/22 14:44:11 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <arpa/inet.h>
 # include <stdlib.h>
 # include <stdio.h>
+# include <dirent.h>
 
 # define BUF_SIZE 1024
 # define N_COMMANDS 1
