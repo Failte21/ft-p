@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/16 12:10:40 by lsimon            #+#    #+#             */
-/*   Updated: 2019/08/22 12:31:20 by lsimon           ###   ########.fr       */
+/*   Updated: 2019/08/22 14:26:36 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ typedef struct	s_server_handler
 	t_connection	pi_connection;
 	t_connection 	dtp_connection;
 	t_mode			dtp_mode;			// server mode for DTP connection (default should be ACTIVE)
+	char			*eol_code;			// <CRLF> (Carriage Return, Line Feed) for NVT-ASCII
 }				t_server_handler;
 
 typedef	int		(*t_builtin)(t_server_handler *, char **);
@@ -97,7 +98,7 @@ typedef	int		(*t_builtin)(t_server_handler *, char **);
 typedef struct	s_command_handler
 {
 	char			*command_name;
-	t_builtin		fn;
+	int				(*fn)(t_server_handler *, char **);
 }				t_command_handler;
 
 // CLIENT
@@ -125,7 +126,7 @@ int					leave_client(t_client_handler *handler);
 // SERVER
 int					connect_server(int pi_port);
 int					leave_server(t_server_handler *handler);
-int					process_command(t_server_handler *handler, char *command_name);
+int					process_command(t_server_handler *handler, char *command_name, char **args);
 int					reply(t_server_handler *handler, t_command_reply *reply);
 int					write_datas(t_server_handler *handler, char	*datas);
 int					ls_command(t_server_handler *handler, char **args);
@@ -137,7 +138,7 @@ void				*ptr_error(char *message);
 
 static t_command_handler	g_command_handler_list[N_COMMANDS] =
 {
-	{ "LIST", ls_command }
+	{ "ls", ls_command }
 };
 
 // socket(2), open(2), close(2), setsockopt(2), getsockname(2)

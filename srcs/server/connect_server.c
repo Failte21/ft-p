@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/17 12:32:20 by lsimon            #+#    #+#             */
-/*   Updated: 2019/08/22 12:37:53 by lsimon           ###   ########.fr       */
+/*   Updated: 2019/08/22 14:18:39 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,28 @@ static t_server_handler	*init()
 	return (handler);
 }
 
-int						server_listen(t_server_handler *handler)
+void					process_eol(char *s)
+{
+	if (*s == '\n')
+		*s = '\0';
+	if (s != NULL && *s != '\0')
+		process_eol(s + 1);
+}
+int						wait_for_commands(t_server_handler *handler)
 {
 	int		r;
 	char	buf[BUF_SIZE];
+	char	**split;
+	char	*tmp;
 
 	while ((r = read(handler->pi_connection.cs, buf, BUF_SIZE - 1)))
 	{
 		buf[r] = '\0';
-		printf("%s", buf);
+
+		tmp = buf;
+		process_eol(tmp);
+		split = ft_strsplit(buf, ' ');
+		process_command(handler, *split, split + 1);
 	}
 	return (0);
 }
@@ -76,7 +89,7 @@ int						connect_server(int pi_port)
 		if (pid > 0)
 			close(handler->pi_connection.cs);
 		else if (pid == 0)
-			server_listen(handler);
+			wait_for_commands(handler);
 	}
 	return 0;
 }
