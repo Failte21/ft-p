@@ -1,23 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ls_command.c                                       :+:      :+:    :+:   */
+/*   reply.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/08/17 11:38:56 by lsimon            #+#    #+#             */
-/*   Updated: 2019/08/24 15:42:41 by lsimon           ###   ########.fr       */
+/*   Created: 2019/08/24 15:34:49 by lsimon            #+#    #+#             */
+/*   Updated: 2019/08/24 15:42:07 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/ft_p.h"
 
-int					ls_command(t_server_handler *handler, char **args)
+int	reply(t_server_handler *handler, char *reply)
 {
-	char	*params[] = {"", NULL};
-
-	if (args == NULL)
-		args = NULL;
-	reply(handler, "200 listing directory\n");
-	return exec_builtin(handler, "/bin/ls", params);
+	write(handler->pi_connection.cs, reply, ft_strlen(reply));
+	return (0);
 }

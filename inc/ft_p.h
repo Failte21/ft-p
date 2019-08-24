@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/16 12:10:40 by lsimon            #+#    #+#             */
-/*   Updated: 2019/08/22 16:25:12 by lsimon           ###   ########.fr       */
+/*   Updated: 2019/08/24 15:43:48 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,12 +111,6 @@ typedef struct	s_client_handler
 	struct hostent	*host;
 }				t_client_handler;
 
-typedef struct	s_command_reply
-{
-	int 	code;
-	char	*message;
-}				t_command_reply;
-
 // CLIENT
 t_client_handler	*init_client_handler(struct hostent *host, int port);
 void				send_command(int dest_socket, char *command_name);
@@ -125,10 +119,10 @@ int					read_datas(t_client_handler *handler, char *datas);
 int					leave_client(t_client_handler *handler);
 
 // SERVER
+void				process_command(t_server_handler *handler, char *command_name, char **args);
 int					connect_server(int pi_port);
 int					leave_server(t_server_handler *handler);
-int					process_command(t_server_handler *handler, char *command_name, char **args);
-int					reply(t_server_handler *handler, t_command_reply *reply);
+int					reply(t_server_handler *handler, char *reply);
 int					write_datas(t_server_handler *handler, char	*datas);
 int					ls_command(t_server_handler *handler, char **args);
 int					exec_builtin(t_server_handler *handler, char *bin, char **args);

@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/17 11:41:58 by lsimon            #+#    #+#             */
-/*   Updated: 2019/08/22 14:36:42 by lsimon           ###   ########.fr       */
+/*   Updated: 2019/08/24 15:54:08 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,13 @@ static t_builtin	*get_builtin(char *command_name, unsigned int i)
 	return (get_builtin(command_name, i + 1));
 }
 
-int					process_command(t_server_handler *handler, char *command_name, char **args)
+void				process_command(t_server_handler *handler, char *command_name, char **args)
 {
 	t_builtin	*fn;
 
 	fn = get_builtin(command_name, 0);
 	if (fn == NULL)
-		return (int_error("This command doesn't exist or hasn't been implemented yet")); // TODO: reply
-	return ((*fn)(handler, args));
+		reply(handler, "200 unknown command\n");
+	else
+		(*fn)(handler, args);
 }

@@ -1,23 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ls_command.c                                       :+:      :+:    :+:   */
+/*   read_pi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/08/17 11:38:56 by lsimon            #+#    #+#             */
-/*   Updated: 2019/08/24 15:42:41 by lsimon           ###   ########.fr       */
+/*   Created: 2019/08/24 11:53:19 by lsimon            #+#    #+#             */
+/*   Updated: 2019/08/24 11:56:18 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/ft_p.h"
 
-int					ls_command(t_server_handler *handler, char **args)
+int	read_pi(t_client_handler *handler)
 {
-	char	*params[] = {"", NULL};
+	int 	r;
+	char	buf[BUF_SIZE];
 
-	if (args == NULL)
-		args = NULL;
-	reply(handler, "200 listing directory\n");
-	return exec_builtin(handler, "/bin/ls", params);
+	while ((r = read(handler->pi_connection.socket, buf, BUF_SIZE - 1)) != -1)
+	{
+		buf[r] = '\0';
+		write(1, buf, r);
+	}
 }
