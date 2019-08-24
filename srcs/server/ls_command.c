@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/17 11:38:56 by lsimon            #+#    #+#             */
-/*   Updated: 2019/08/24 15:42:41 by lsimon           ###   ########.fr       */
+/*   Updated: 2019/08/24 15:57:56 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,5 @@ int					ls_command(t_server_handler *handler, char **args)
 
 	if (args == NULL)
 		args = NULL;
-	reply(handler, "200 listing directory\n");
 	return exec_builtin(handler, "/bin/ls", params);
 }
