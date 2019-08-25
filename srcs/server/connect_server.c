@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/17 12:32:20 by lsimon            #+#    #+#             */
-/*   Updated: 2019/08/24 15:48:54 by lsimon           ###   ########.fr       */
+/*   Updated: 2019/08/24 18:29:21 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int						connect_server(int pi_port)
 
 	handler = init();
 	running = 1;
-	pi_socket = create_socket(pi_port, NULL, PASSIVE);
+	pi_socket = create_srv_socket(pi_port);
 	if (pi_socket == -1)
 		return (-1);
 	if ((listen(pi_socket, 42) == -1)) { // TODO: find out about backlog
