@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/17 11:41:58 by lsimon            #+#    #+#             */
-/*   Updated: 2019/08/25 14:06:37 by lsimon           ###   ########.fr       */
+/*   Updated: 2019/08/25 14:51:21 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void				process_command(t_server_handler *handler, char *command_name, char **ar
 	t_builtin	*fn;
 	int			dtp_cs;
 
+	dtp_cs = -1;
 	fn = get_builtin(command_name, 0);
 	if (fn == NULL)
 		reply(handler, "500 Syntax error, command unrecognized.\n");
@@ -35,12 +36,21 @@ void				process_command(t_server_handler *handler, char *command_name, char **ar
 		{
 			dtp_cs = create_cs(handler->dtp_connection.socket);
 			if (dtp_cs == -1)
+			{
 				reply(handler, "425 Can't open data connection.\n");
-			handler->dtp_connection.cs = dtp_cs;
+				return ;
+			}
+			else {
+				handler->dtp_connection.cs = dtp_cs;
+				reply(handler, "150 File status okay; about to open data connection.\n");
+			}
 		}
 		else
 			reply(handler, "125 Data connection already open; transfer starting.\n");
 		(*fn)(handler, args);
+		reply(handler, "200 OK.\n");
+		close(dtp_cs);
+		handler->dtp_connection.cs = -1;
 	}
 
 }

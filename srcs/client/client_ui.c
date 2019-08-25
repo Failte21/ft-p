@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/22 11:42:38 by lsimon            #+#    #+#             */
-/*   Updated: 2019/08/25 10:48:01 by lsimon           ###   ########.fr       */
+/*   Updated: 2019/08/25 14:51:18 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,19 +28,39 @@ static void		greetings(void)
 	display_prompt();
 }
 
+static void 	handle_command_lifecycle(t_client_handler *handler)
+{
+	int		r;
+	char	buf[BUF_SIZE];
+	int		dtp_socket;
+
+	dtp_socket = create_cli_socket(inet_ntoa(*( struct in_addr*)(handler->host->h_addr_list[0])), 4141);
+	while ((r = read(handler->pi_connection.socket, buf, BUF_SIZE - 1)) != -1)
+	{
+		write(1, buf, r);
+		if (*buf == '1')
+		{
+			r = read(dtp_socket, buf, BUF_SIZE);
+			write(1, buf, r);
+		}
+		if (*buf == '2' || *buf == '5')
+		{
+			close(dtp_socket);
+			return ;
+		}
+	}
+}
+
 static int 		client_listen(t_client_handler *handler)
 {
 	char	buf[BUF_SIZE];
 	int		r;
-	int		dtp_socket;
 
 	greetings();
 	while ((r = read(0, buf, BUF_SIZE - 1)))
 	{
 		write(handler->pi_connection.socket, buf, r);
-		dtp_socket = create_cli_socket(inet_ntoa(*( struct in_addr*)(handler->host->h_addr_list[0])), 4141);
-		r = read(dtp_socket, buf, BUF_SIZE);
-		write(1, buf, r);
+		handle_command_lifecycle(handler);
 		display_prompt();
 	}
 	return (0);
