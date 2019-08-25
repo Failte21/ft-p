@@ -6,11 +6,24 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/17 11:41:58 by lsimon            #+#    #+#             */
-/*   Updated: 2019/08/24 18:29:28 by lsimon           ###   ########.fr       */
+/*   Updated: 2019/08/25 10:54:36 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/ft_p.h"
+
+static int				create_cs(int socket)
+{
+	int 				cs;
+	unsigned int 		cslen;
+	struct sockaddr_in	csin;
+
+	cs = accept(socket, (struct sockaddr *)&csin, &cslen);
+	if (cs == -1)
+		return (int_error("accept error\n"));
+	ft_putstr("New connection\n");
+	return (cs);
+}
 
 static t_builtin	*get_builtin(char *command_name, unsigned int i)
 {
@@ -24,18 +37,23 @@ static t_builtin	*get_builtin(char *command_name, unsigned int i)
 void				process_command(t_server_handler *handler, char *command_name, char **args)
 {
 	t_builtin	*fn;
-	int			s;
+	int			dtp_cs;
 
 	fn = get_builtin(command_name, 0);
-	ft_putstr("1.0\n");
-	s = create_srv_socket(4141);
-	// if (s == -1)
-	// 	reply(handler, "500 error");
 	if (fn == NULL)
 		reply(handler, "500 Syntax error, command unrecognized.\n");
 	else
 	{
-		reply(handler, "200 Command okay.\n");
+		if (handler->dtp_connection.cs == -1)
+		{
+			dtp_cs = create_cs(handler->dtp_connection.socket);
+			if (dtp_cs == -1)
+				reply(handler, "425 Can't open data connection.\n");
+			handler->dtp_connection.cs = dtp_cs;
+		}
+		else
+			reply(handler, "125 Data connection already open; transfer starting.\n");
 		(*fn)(handler, args);
 	}
+
 }

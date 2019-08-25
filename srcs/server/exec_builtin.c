@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/22 16:21:47 by lsimon            #+#    #+#             */
-/*   Updated: 2019/08/22 16:27:41 by lsimon           ###   ########.fr       */
+/*   Updated: 2019/08/25 10:54:22 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	exec_builtin(t_server_handler *handler, char *bin, char **args)
 		return int_error("fork error");
 	if (pid == 0)
 	{
-		dup2(handler->pi_connection.cs, 1);
+		dup2(handler->dtp_connection.cs, 1);
 		if (execv(bin, args) < 0)
 			return (int_error("execv error"));
 	}
@@ -34,7 +34,7 @@ int	exec_builtin(t_server_handler *handler, char *bin, char **args)
 		wait4(pid, &status, 0, &m_rusage);
 		if (WEXITSTATUS(status))
 			return (-1);
-		send(handler->pi_connection.cs, "\0", 1, 0);
+		send(handler->dtp_connection.cs, "\0", 1, 0);
 		return (0);
 	}
 	return (0);

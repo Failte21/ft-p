@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/22 11:42:38 by lsimon            #+#    #+#             */
-/*   Updated: 2019/08/25 10:04:57 by lsimon           ###   ########.fr       */
+/*   Updated: 2019/08/25 10:48:01 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,15 @@ static int 		client_listen(t_client_handler *handler)
 {
 	char	buf[BUF_SIZE];
 	int		r;
+	int		dtp_socket;
 
 	greetings();
 	while ((r = read(0, buf, BUF_SIZE - 1)))
 	{
 		write(handler->pi_connection.socket, buf, r);
+		dtp_socket = create_cli_socket(inet_ntoa(*( struct in_addr*)(handler->host->h_addr_list[0])), 4141);
+		r = read(dtp_socket, buf, BUF_SIZE);
+		write(1, buf, r);
 		display_prompt();
 	}
 	return (0);

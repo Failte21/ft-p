@@ -6,7 +6,7 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/17 12:32:20 by lsimon            #+#    #+#             */
-/*   Updated: 2019/08/24 18:29:21 by lsimon           ###   ########.fr       */
+/*   Updated: 2019/08/25 10:51:19 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ static int				create_cs(int socket)
 	cs = accept(socket, (struct sockaddr *)&csin, &cslen);
 	if (cs == -1)
 		return (int_error("accept error\n"));
+	ft_putstr("New connection\n");
 	return (cs);
 }
 
@@ -33,6 +34,7 @@ static t_server_handler	*init()
 		return (ptr_error("malloc error\n"));
 
 	handler->dtp_mode = PASSIVE;
+	handler->dtp_connection.cs = -1;
 	return (handler);
 }
 
@@ -65,6 +67,7 @@ int						wait_for_commands(t_server_handler *handler)
 int						connect_server(int pi_port)
 {
 	int					pi_socket;
+	int					dtp_socket;
 	int					pi_cs;
 	int					running;
 	t_server_handler	*handler;
@@ -73,12 +76,14 @@ int						connect_server(int pi_port)
 	handler = init();
 	running = 1;
 	pi_socket = create_srv_socket(pi_port);
-	if (pi_socket == -1)
+	dtp_socket = create_srv_socket(4141);
+	if (pi_socket == -1 || dtp_socket == -1)
 		return (-1);
-	if ((listen(pi_socket, 42) == -1)) { // TODO: find out about backlog
+	if ((listen(pi_socket, 42) == -1) || listen(dtp_socket, 42) == -1) { // TODO: find out about backlog
 		return (-1);
 	}
 	handler->pi_connection.socket = pi_socket;
+	handler->dtp_connection.socket = dtp_socket;
 	while (running)
 	{
 		pi_cs = create_cs(pi_socket);
