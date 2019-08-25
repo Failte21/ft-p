@@ -6,24 +6,11 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/17 11:41:58 by lsimon            #+#    #+#             */
-/*   Updated: 2019/08/25 10:54:36 by lsimon           ###   ########.fr       */
+/*   Updated: 2019/08/25 14:06:37 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/ft_p.h"
-
-static int				create_cs(int socket)
-{
-	int 				cs;
-	unsigned int 		cslen;
-	struct sockaddr_in	csin;
-
-	cs = accept(socket, (struct sockaddr *)&csin, &cslen);
-	if (cs == -1)
-		return (int_error("accept error\n"));
-	ft_putstr("New connection\n");
-	return (cs);
-}
 
 static t_builtin	*get_builtin(char *command_name, unsigned int i)
 {

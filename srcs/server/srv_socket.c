@@ -6,11 +6,24 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/18 13:11:47 by lsimon            #+#    #+#             */
-/*   Updated: 2019/08/24 18:29:37 by lsimon           ###   ########.fr       */
+/*   Updated: 2019/08/25 14:06:54 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/ft_p.h"
+
+int	create_cs(int socket)
+{
+	int 				cs;
+	unsigned int 		cslen;
+	struct sockaddr_in	csin;
+
+	cs = accept(socket, (struct sockaddr *)&csin, &cslen);
+	if (cs == -1)
+		return (int_error("accept error\n"));
+	ft_putstr("New connection\n");
+	return (cs);
+}
 
 int create_srv_socket(int port)
 {
