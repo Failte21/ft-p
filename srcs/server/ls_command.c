@@ -6,12 +6,13 @@
 /*   By: lsimon <lsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/17 11:38:56 by lsimon            #+#    #+#             */
-/*   Updated: 2019/08/25 16:31:48 by lsimon           ###   ########.fr       */
+/*   Updated: 2019/08/25 16:36:52 by lsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/ft_p.h"
 
+// might cause leaks
 char				**append(char **arr, char *to_append)
 {
 	char	**updated_arr;
